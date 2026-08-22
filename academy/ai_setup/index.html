@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>লিনিয়ার অ্যালজেব্রা — অনুশীলনী প্রশ্নপত্র</title>
+  <style>
+    :root{
+      --ink:#24231f;--muted:#6d685e;--paper:#f8f3e8;--paper-deep:#f0e8d8;
+      --desk:#d7d0c3;--line:#b8ad9a;--accent:#274c3d;--accent2:#9b6239;--answer:#edf1e7;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:
+      radial-gradient(circle at 18% 8%,rgba(255,255,255,.48),transparent 23rem),
+      repeating-linear-gradient(90deg,rgba(90,70,45,.018) 0 1px,transparent 1px 5px),var(--desk);
+      color:var(--ink);font-family:"Noto Serif Bengali","Nirmala UI","SolaimanLipi",serif;line-height:1.65}
+    .toolbar{position:sticky;top:0;z-index:30;background:rgba(39,45,41,.96);color:#fff;
+      border-bottom:1px solid rgba(255,255,255,.14);box-shadow:0 3px 16px #403a3280}
+    .toolbar-inner{max-width:1050px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .brand{font-family:system-ui,sans-serif;font-weight:700;margin-right:auto;white-space:nowrap}
+    .brand small{display:block;font-size:10px;font-weight:500;opacity:.7;letter-spacing:.08em;text-transform:uppercase}
+    button,.chip{font:600 12px system-ui,sans-serif;border:1px solid rgba(255,255,255,.26);border-radius:5px;
+      background:transparent;color:#fff;padding:7px 10px;cursor:pointer;transition:.18s}
+    button:hover,.chip:hover{background:rgba(255,255,255,.12)}
+    button.primary{background:#e9dfcd;color:#282e2b;border-color:#e9dfcd}
+    .progress-wrap{width:120px;font:11px system-ui,sans-serif;color:#ddd}
+    .progress-track{height:4px;margin-top:3px;border-radius:5px;background:#ffffff25;overflow:hidden}
+    .progress-fill{height:100%;width:0;background:#e2bd75;transition:.3s}
+    .page-wrap{padding:38px 16px 70px}
+    .paper{width:min(210mm,100%);min-height:297mm;margin:0 auto;padding:18mm 17mm 20mm;
+      background-color:var(--paper);background-image:
+      radial-gradient(circle at 30% 20%,rgba(104,83,49,.025) 0 1px,transparent 1.5px),
+      linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,0));background-size:7px 7px,100% 100%;
+      box-shadow:0 2px 3px #3f382d28,0 16px 45px #3f382d42;position:relative}
+    .paper:before{content:"";position:absolute;inset:8px;border:1px solid rgba(78,65,45,.13);pointer-events:none}
+    .exam-head{text-align:center;border-bottom:2px solid var(--ink);padding-bottom:12px}
+    .seal{width:44px;height:44px;border:2px solid var(--accent);border-radius:50%;display:grid;place-items:center;
+      margin:0 auto 6px;font:700 18px Georgia;color:var(--accent);box-shadow:inset 0 0 0 3px var(--paper),inset 0 0 0 4px var(--accent)}
+    h1{font-size:26px;line-height:1.2;margin:2px 0 4px;letter-spacing:.01em}
+    .subtitle{font-size:14px;color:var(--muted)}
+    .meta{display:grid;grid-template-columns:1fr 1fr 1fr;margin:10px 0 0;border-top:1px solid var(--line);padding-top:8px;font-size:13px}
+    .meta span:first-child{text-align:left}.meta span:last-child{text-align:right}
+    .student-line{display:grid;grid-template-columns:2fr 1fr;gap:30px;margin:17px 0 12px;font-size:13px}
+    .blank{display:inline-block;width:70%;border-bottom:1px dotted #706b62;transform:translateY(-3px)}
+    .instructions{border:1px solid var(--line);background:#f3ecdf;padding:10px 13px;margin:12px 0 20px;font-size:13px}
+    .instructions strong{color:var(--accent)}
+    .toc{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+    .toc a{font:11px system-ui,sans-serif;color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent)}
+    .section{margin:24px 0 6px;scroll-margin-top:75px}
+    .section-head{display:flex;align-items:end;gap:10px;border-bottom:1px solid var(--ink);padding-bottom:4px;margin-bottom:5px}
+    .section-head h2{font-size:18px;margin:0}.section-head p{font-size:11px;color:var(--muted);margin:0 0 2px auto}
+    .question{padding:14px 3px 15px;border-bottom:1px dashed #b9ae9b;break-inside:avoid}
+    .qtop{display:flex;align-items:flex-start;gap:8px}
+    .qnum{font:700 12px Georgia,serif;width:25px;height:25px;flex:0 0 25px;border:1px solid #777066;border-radius:50%;display:grid;place-items:center}
+    .qbody{flex:1;min-width:0;font-size:15px}
+    .qtext{margin:0}.marks{font:italic 11px Georgia;color:var(--muted);white-space:nowrap;margin-left:8px}
+    .tags{margin-top:6px;display:flex;gap:5px;flex-wrap:wrap}
+    .tag{font:600 9px system-ui,sans-serif;letter-spacing:.02em;border:1px solid #b8ad9a;border-radius:10px;padding:2px 6px;color:#6c6255}
+    .workbox{height:38px;margin:10px 0 3px;background:repeating-linear-gradient(transparent 0 18px,rgba(102,91,73,.14) 19px)}
+    .actions{display:flex;align-items:center;gap:8px;margin-top:8px}
+    .solution-btn{color:var(--accent);border-color:#9ca99f;background:#eef0e8;padding:5px 9px}
+    .solution-btn:hover{background:#e1e8dd}
+    .done-label{font:11px system-ui,sans-serif;color:var(--muted);display:flex;align-items:center;gap:4px;cursor:pointer}
+    .done-label input{accent-color:var(--accent)}
+    .solution{display:none;margin:10px 0 2px;padding:11px 13px 10px 16px;background:var(--answer);border-left:3px solid var(--accent);font-size:14px}
+    .solution.open{display:block;animation:reveal .2s ease-out}
+    @keyframes reveal{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+    .solution strong:first-child{color:var(--accent)}
+    .matrix{display:inline-grid;grid-auto-flow:row;vertical-align:middle;position:relative;padding:3px 9px;margin:0 3px;line-height:1.25;font-family:Georgia,"Times New Roman",serif}
+    .matrix:before,.matrix:after{content:"";position:absolute;top:0;bottom:0;width:5px;border-top:1.5px solid;border-bottom:1.5px solid}
+    .matrix:before{left:0;border-left:1.5px solid}.matrix:after{right:0;border-right:1.5px solid}
+    .row{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(22px,auto);text-align:center;gap:7px}
+    .vec{font-family:Georgia,serif;font-style:italic;font-weight:600}.formula{font-family:Georgia,"Times New Roman",serif;white-space:nowrap}
+    .diagram{display:block;width:min(330px,100%);height:auto;margin:10px auto;border:1px solid #cec3b1;background:#fbf7ee}
+    .quote{color:#554d42;font-style:italic}
+    .paper-foot{margin-top:28px;padding-top:10px;border-top:2px solid var(--ink);text-align:center;font-size:12px;color:var(--muted)}
+    .legend{font:11px system-ui,sans-serif;margin-top:5px}
+    .toast{position:fixed;right:18px;bottom:18px;background:#243b32;color:#fff;padding:10px 14px;border-radius:5px;
+      font:12px system-ui,sans-serif;box-shadow:0 5px 20px #0004;opacity:0;transform:translateY(8px);pointer-events:none;transition:.25s}
+    .toast.show{opacity:1;transform:none}
+    @media(max-width:700px){.page-wrap{padding:12px 0 40px}.paper{padding:12mm 7mm}.paper:before{display:none}h1{font-size:22px}.meta{font-size:11px}.toolbar-inner{gap:6px}.progress-wrap{display:none}.workbox{height:28px}.student-line{gap:12px}}
+    @media print{
+      body{background:#fff}.toolbar,.actions,.toast{display:none!important}.page-wrap{padding:0}.paper{width:100%;padding:12mm 14mm;box-shadow:none;background:var(--paper)!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}.paper:before{display:none}
+      .question{break-inside:avoid}.solution{display:none!important}.section{break-before:auto}.exam-head{break-after:avoid}
+    }
+  </style>
+</head>
+<body>
+  <header class="toolbar">
+    <div class="toolbar-inner">
+      <div class="brand">ভেক্টর পত্র <small>Essence of Linear Algebra · Practice I</small></div>
+      <div class="progress-wrap"><span id="progressText">সম্পন্ন ০/৩০</span><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+      <button onclick="toggleAll(true)">সব উত্তর দেখুন</button>
+      <button onclick="toggleAll(false)">সব উত্তর লুকান</button>
+      <button class="primary" onclick="window.print()">প্রিন্ট / PDF</button>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+    <article class="paper">
+      <section class="exam-head">
+        <div class="seal">LA</div>
+        <div class="subtitle">স্ব-অনুশীলন মূল্যায়ন · সেট–০১</div>
+        <h1>লিনিয়ার অ্যালজেব্রা: জ্যামিতি থেকে ম্যাট্রিক্স</h1>
+        <div class="subtitle">3Blue1Brown-এর প্রথম পাঁচটি পাঠের আলোকে</div>
+        <div class="meta"><span>সময়: নিজের গতিতে</span><span>মোট প্রশ্ন: ৩০</span><span>পূর্ণমান: ১০০</span></div>
+      </section>
+      <div class="student-line"><div>নাম: <span class="blank"></span></div><div>তারিখ: <span class="blank"></span></div></div>
+      <aside class="instructions">
+        <strong>নির্দেশনা:</strong> আগে কাগজে প্রতিটি প্রশ্ন সমাধান করো। তারপর “উত্তর দেখুন” চাপো। শুধু চূড়ান্ত উত্তর নয়—তোমার জ্যামিতিক ব্যাখ্যাটি সমাধানের সঙ্গে মিলিয়ে দেখো। ক্যালকুলেটর দরকার নেই।
+        <nav class="toc">
+          <a href="#s1">ক. ভেক্টর</a><a href="#s2">খ. Span ও Basis</a><a href="#s3">গ. Linear Transformation</a><a href="#s4">ঘ. Matrix Multiplication</a><a href="#s5">ঙ. 3D</a><a href="#s6">চ. Challenge</a>
+        </nav>
+      </aside>
+      <div id="questions"></div>
+      <footer class="paper-foot">— প্রশ্নপত্র সমাপ্ত —<div class="legend">বোঝার লক্ষ্য: সংখ্যার টেবিল হিসেবে নয়, স্থান পরিবর্তনের ভাষা হিসেবে ম্যাট্রিক্সকে দেখা।</div></footer>
+    </article>
+  </main>
+  <div class="toast" id="toast"></div>
+<script>
+const M=(rows)=>`<span class="matrix">${rows.map(r=>`<span class="row">${r.map(x=>`<span>${x}</span>`).join('')}</span>`).join('')}</span>`;
+const V=(x)=>`<span class="vec">${x}</span>`;
+const data=[
+{title:'ক বিভাগ — ভেক্টর: সংখ্যা, তীর ও চলাচল',note:'প্রশ্ন ১–৫ · ১৪ নম্বর',id:'s1',qs:[
+['ভেক্টর '+V('v')+' = '+M([['3'],['−2']])+'-কে (ক) একটি তীর এবং (খ) একটি চলাচলের নির্দেশ হিসেবে ব্যাখ্যা করো। এর tip কোথায় থাকবে?',2,'ধারণা · সহজ','উৎপত্তি থেকে ৩ একক ডানে ও ২ একক নিচে গেলে tip হবে <span class="formula">(3, −2)</span>। তীর হিসেবে এটি origin থেকে ঐ বিন্দুর displacement; চলাচল হিসেবে “ডানে ৩, নিচে ২”।'],
+['ধরা যাক '+V('u')+' = '+M([['2'],['1']])+' এবং '+V('v')+' = '+M([['−1'],['3']])+ '। Head-to-tail পদ্ধতিতে '+V('u')+' + '+V('v')+' নির্ণয় করো এবং জ্যামিতিক অর্থ বলো।',2,'হিসাব · সহজ','উপাংশ যোগ করলে '+M([['2+(−1)'],['1+3']])+' = '+M([['1'],['4']])+'। প্রথম চলাচলের শেষ থেকে দ্বিতীয় চলাচল করলে মোট displacement-ই যোগফল।'],
+['ভেক্টর '+M([['−2'],['4']])+'-কে <span class="formula">−½</span> দিয়ে scale করলে কী হবে? তীরের দিক ও দৈর্ঘ্যে কী পরিবর্তন আসবে?',3,'ভিজ্যুয়াল · সহজ','ফল '+M([['1'],['−2']])+'। ঋণাত্মক scalar দিক উল্টায়; <span class="formula">|−½|=½</span> হওয়ায় দৈর্ঘ্য অর্ধেক হয়।'],
+['একজন বলে, “ভেক্টর '+M([['1'],['2']])+' আর origin থেকে (1,2)-এ আঁকা তীর একই জিনিস; তাই অন্য কোথাও সরানো যায় না।” বক্তব্যটি সংশোধন করো।',3,'যুক্তি · মাঝারি','Coordinate vector একটি displacement বোঝায়; অবস্থান-স্বাধীনভাবে একই দৈর্ঘ্য ও দিকে সমান্তরাল সরানো যায়। Origin-এ আঁকাটি তার standard-position representation, একমাত্র representation নয়।'],
+['যদি '+V('a')+' + '+V('b')+' = '+V('a')+' হয়, তবে '+V('b')+' কী? সংখ্যার পাশাপাশি জ্যামিতিকভাবে ব্যাখ্যা করো।',4,'যুক্তি · সহজ',V('b')+' অবশ্যই zero vector। এমন displacement-ই '+V('a')+'-এর endpoint বদলাবে না। এর দৈর্ঘ্য ০; দিক নির্দিষ্ট নয়।'] ]},
+{title:'খ বিভাগ — Linear Combination, Span ও Basis',note:'প্রশ্ন ৬–১১ · ২০ নম্বর',id:'s2',qs:[
+[''+V('a')+' = '+M([['1'],['2']])+', '+V('b')+' = '+M([['3'],['−1']])+' হলে <span class="formula">2'+V('a')+' − '+V('b')+'</span> নির্ণয় করো।',2,'হিসাব · সহজ','<span class="formula">2'+V('a')+'−'+V('b')+'</span> = '+M([['2'],['4']])+' − '+M([['3'],['−1']])+' = '+M([['−1'],['5']])+'.'],
+[''+M([['5'],['1']])+' কি '+M([['1'],['1']])+' ও '+M([['2'],['−1']])+'-এর linear combination? হলে coefficients বের করো।',4,'Span · মাঝারি','ধরি <span class="formula">c(1,1)+d(2,−1)=(5,1)</span>। তাই <span class="formula">c+2d=5, c−d=1</span>। বিয়োগে <span class="formula">3d=4</span>, অর্থাৎ <span class="formula">d=4/3, c=7/3</span>। তাই হ্যাঁ।'],
+['দুটি non-zero 2D ভেক্টর একই সরলরেখায় থাকলে তাদের span দেখতে কেমন? কেন পুরো plane পাওয়া যায় না?',3,'ভিজ্যুয়াল · সহজ','একটি origin-গামী সরলরেখা। একটি ভেক্টর অন্যটির scalar multiple, তাই যেকোনো linear combination-ও একই দিকের scalar multiple; নতুন স্বাধীন দিক তৈরি হয় না।'],
+[''+V('i')+' = '+M([['1'],['0']])+' এবং '+V('j')+' = '+M([['0'],['1']])+' কেন 2D space-এর basis? “span” এবং “independence”—দুই শব্দই ব্যবহার করো।',3,'Basis · মাঝারি','এরা সব <span class="formula">(x,y)=x'+V('i')+'+y'+V('j')+'</span> span করে। আবার কেউ কারও scalar multiple নয়; <span class="formula">c'+V('i')+'+d'+V('j')+'=0</span> কেবল <span class="formula">c=d=0</span>-তে সম্ভব। তাই linearly independent spanning set।'],
+['সত্য না মিথ্যা: “যে কোনো তিনটি 2D ভেক্টর অবশ্যই linearly dependent।” কারণ দাও।',4,'সত্য/মিথ্যা · মাঝারি','সত্য। 2D-তে সর্বোচ্চ দুইটি স্বাধীন দিক থাকে। প্রথম দুইটি যদি plane span করে, তৃতীয়টি তাদের linear combination; আর প্রথম দুইটিই dependent হলে তিনটিও dependent।'],
+['অন্য একটি coordinate system-এর basis vectors '+V('b₁')+'='+M([['2'],['0']])+' ও '+V('b₂')+'='+M([['1'],['1']])+ '। এই basis-এ coordinates '+M([['3'],['−2']])+' হলে standard coordinates কত?',4,'Basis · মাঝারি','এটি <span class="formula">3'+V('b₁')+'−2'+V('b₂')+'</span> = '+M([['6'],['0']])+' + '+M([['−2'],['−2']])+' = '+M([['4'],['−2']])+'. Coordinates হলো basis vectors-এর জন্য coefficients।'] ]},
+{title:'গ বিভাগ — Linear Transformation ও Matrix',note:'প্রশ্ন ১২–১৭ · ২২ নম্বর',id:'s3',qs:[
+['একটি transformation '+V('T')+' standard basis-কে '+V('T(i)')+'='+M([['2'],['1']])+' এবং '+V('T(j)')+'='+M([['−1'],['3']])+'-এ পাঠায়। '+V('T')+'-এর matrix লেখো।',3,'Matrix · সহজ','Matrix-এর columns হলো transformed basis vectors: <span class="formula">A=</span>'+M([['2','−1'],['1','3']])+'.'],
+['আগের transformation-এ '+V('T')+M([['4'],['−2']])+' নির্ণয় করো—প্রথমে “scaled columns” হিসেবে, তারপর matrix হিসাব দিয়ে।',4,'হিসাব · মাঝারি','<span class="formula">4T('+V('i')+')−2T('+V('j')+')</span> = <span class="formula">4(2,1)−2(−1,3)=(10,−2)</span>। Matrix হিসাবেও '+M([['2','−1'],['1','3']])+M([['4'],['−2']])+' = '+M([['10'],['−2']])+'.'],
+['কোনো transformation origin-কে <span class="formula">(1,0)</span>-এ সরিয়ে দেয়। এটি কি linear হতে পারে? Linear transformation-এর দুটি visual শর্ত উল্লেখ করো।',3,'ধারণা · সহজ','না। Linear transformation-এ origin স্থির থাকে এবং grid lines সোজা ও সমান ব্যবধানে থাকে (lines parallel থাকতে পারে; space বাঁকানো যায় না)। বিশেষভাবে <span class="formula">T(0)=0</span>।'],
+['Transformation <span class="formula">T(x,y)=(x+2y, 3x−y)</span>-এর matrix বের করো—সূত্র মুখস্থ করে নয়, basis vectors কোথায় যায় তা দেখে।',4,'Matrix · মাঝারি','<span class="formula">T(1,0)=(1,3)</span>, <span class="formula">T(0,1)=(2,−1)</span>। এগুলো column: '+M([['1','2'],['3','−1']])+'.'],
+['Matrix '+M([['1','2'],['0','0']])+' plane-কে জ্যামিতিকভাবে কী করে? Output vector-গুলো কোথায় থাকে? এটি “space squash” কেন?',4,'ভিজ্যুয়াল · মাঝারি','<span class="formula">(x,y)↦(x+2y,0)</span>। সব output x-axis-এ থাকে। দুই স্বাধীন direction-যুক্ত plane একটি line-এ collapse হওয়ায় এটি space squash।'],
+['একটি linear transformation-এর matrix-এর দুই column একই। এতে '+V('i−j')+' কোথায় যাবে? তোমার উত্তরটি linearity দিয়ে প্রমাণ করো।',4,'যুক্তি · কঠিন','যদি <span class="formula">T('+V('i')+')=T('+V('j')+')</span>, তবে <span class="formula">T('+V('i−j')+')=T('+V('i')+')−T('+V('j')+')=0</span>। অর্থাৎ non-zero direction <span class="formula">i−j</span> origin-এ collapse করে।'] ]},
+{title:'ঘ বিভাগ — Matrix Multiplication: Transformation-এর Composition',note:'প্রশ্ন ১৮–২২ · ১৮ নম্বর',id:'s4',qs:[
+['প্রথমে <span class="formula">90°</span> counterclockwise rotation <span class="formula">R=</span>'+M([['0','−1'],['1','0']])+', তারপর x-direction stretch <span class="formula">S=</span>'+M([['2','0'],['0','1']])+'। Combined matrix কোনটি—<span class="formula">SR</span> না <span class="formula">RS</span>?',3,'Composition · সহজ','<span class="formula">SR</span>। Vector-এর সবচেয়ে কাছের matrix আগে কাজ করে: <span class="formula">v↦Rv↦S(Rv)=(SR)v</span>।'],
+['উপরের <span class="formula">SR</span> হিসাব করো। Columns কোথা থেকে আসে—সেটিও বলো।',4,'হিসাব · মাঝারি','<span class="formula">SR=</span>'+M([['2','0'],['0','1']])+M([['0','−1'],['1','0']])+' = '+M([['0','−2'],['1','0']])+'. Columns হলো প্রথম transformation-এর basis outputs-কে দ্বিতীয় transformation দিয়ে আবার transform করার ফল।'],
+['একই <span class="formula">R</span> ও <span class="formula">S</span>-এর জন্য <span class="formula">RS</span> বের করো। <span class="formula">SR ≠ RS</span> দেখে কোন বড় শিক্ষা পাও?',4,'হিসাব · ধারণা','<span class="formula">RS=</span>'+M([['0','−1'],['1','0']])+M([['2','0'],['0','1']])+' = '+M([['0','−1'],['2','0']])+'. Transformation-এর order সাধারণত ফল বদলায়; matrix multiplication commutative নয়।'],
+['ধরা যাক <span class="formula">A</span> একটি shear এবং <span class="formula">B</span> একটি rotation। বাক্যটি প্রতীকে লেখো: “প্রথমে shear, তারপর rotation, তারপর আবার shear।”',3,'Notation · সহজ','Combined transformation হলো <span class="formula">ABA</span>। ডান পাশের <span class="formula">A</span> প্রথমে, তারপর <span class="formula">B</span>, শেষে বাম পাশের <span class="formula">A</span> কাজ করে।'],
+['Matrix multiplication associative—<span class="formula">(AB)C=A(BC)</span>—কিন্তু সাধারণত commutative নয়। Transformation-এর ভাষায় associative হওয়াটি স্বাভাবিক কেন?',4,'যুক্তি · কঠিন','তিনটি transformation একই order-এ apply হচ্ছে; শুধু কোন দুইটিকে আগে একটি combined transformation হিসেবে গুচ্ছ করছি তা বদলায়। তাই final mapping বদলায় না। কিন্তু <span class="formula">AB</span> বনাম <span class="formula">BA</span>-তে actual order বদলে যায়।'] ]},
+{title:'ঙ বিভাগ — Three-dimensional Transformations',note:'প্রশ্ন ২৩–২৬ · ১২ নম্বর',id:'s5',qs:[
+['3D standard basis vectors '+V('i, j, k')+' লিখো। একটি <span class="formula">3×3</span> matrix-এর columns জ্যামিতিকভাবে কী বোঝায়?',3,'3D · সহজ','<span class="formula">i=(1,0,0), j=(0,1,0), k=(0,0,1)</span>। তিনটি column যথাক্রমে <span class="formula">T(i), T(j), T(k)</span>—অর্থাৎ তিনটি basis direction কোথায় যায়।'],
+['Transformation-টি '+V('i')+'→'+M([['1'],['0'],['1']])+', '+V('j')+'→'+M([['0'],['2'],['0']])+', '+V('k')+'→'+M([['−1'],['0'],['1']])+' পাঠায়। Matrix লেখো এবং <span class="formula">T(2,1,−1)</span> বের করো।',4,'3D হিসাব · মাঝারি','<span class="formula">A=</span>'+M([['1','0','−1'],['0','2','0'],['1','0','1']])+'. তারপর <span class="formula">2T(i)+T(j)−T(k)=(3,2,1)</span>।'],
+['3D space-এ একটি linear transformation যদি সব vector-কে xy-plane-এ পাঠায়, তবে transformed '+V('i, j, k')+'-এর z-components সম্পর্কে কী বলা যায়?',2,'3D ধারণা · সহজ','তিনটি transformed basis vector-এরই z-component ০। তাই matrix-এর তৃতীয় row সম্পূর্ণ zero হবে এবং যেকোনো linear combination-ও xy-plane-এ থাকবে।'],
+['একটি 3D transformation-এর তিনটি transformed basis vector একই plane-এ রয়েছে। পুরো 3D space-এর কী ঘটে? সতর্কভাবে ব্যাখ্যা করো।',3,'Span · মাঝারি','সব output ওই তিন vector-এর linear combination। তারা একটি plane (বা তারও কম মাত্রা) span করায় পুরো 3D space সেই plane/line/point-এ collapse হয়; কোনো output ঐ span-এর বাইরে যেতে পারে না।'] ]},
+{title:'চ বিভাগ — সমন্বিত Challenge',note:'প্রশ্ন ২৭–৩০ · ১৪ নম্বর',id:'s6',qs:[
+['একটি linear transformation <span class="formula">T</span>-এর জন্য <span class="formula">T(1,1)=(3,2)</span> এবং <span class="formula">T(1,−1)=(1,4)</span>। <span class="formula">T(i)</span>, <span class="formula">T(j)</span> ও matrix বের করো।',4,'Challenge · কঠিন','<span class="formula">(1,1)=i+j</span>, <span class="formula">(1,−1)=i−j</span>। যোগে <span class="formula">2T(i)=(4,6)</span>, তাই <span class="formula">T(i)=(2,3)</span>। বিয়োগে <span class="formula">2T(j)=(2,−2)</span>, তাই <span class="formula">T(j)=(1,−1)</span>। Matrix '+M([['2','1'],['3','−1']])+'.'],
+['কোনো <span class="formula">2×2</span> matrix <span class="formula">A</span>-এর জন্য <span class="formula">A(2,1)=0</span>। এটি space-এর উপর কী প্রভাবের প্রমাণ? <span class="formula">A</span>-এর columns-এর মধ্যে একটি সম্পর্ক লেখো।',3,'Challenge · কঠিন','একটি non-zero direction origin-এ collapse করছে, তাই transformation পুরো plane-কে plane হিসেবে রাখতে পারে না। Columns <span class="formula">a₁,a₂</span> হলে <span class="formula">2a₁+a₂=0</span>, অর্থাৎ <span class="formula">a₂=−2a₁</span>; columns dependent।'],
+['বন্ধু বলল: “Matrix-এর entries মুখস্থ করলেই transformation বোঝা যায়।” তুমি '+M([['1','2'],['0','1']])+' ব্যবহার করে তাকে visual ভাষায় উত্তর দাও।',3,'ব্যাখ্যা · মাঝারি','Columns বলছে <span class="formula">i→(1,0)</span> এবং <span class="formula">j→(2,1)</span>। অর্থাৎ horizontal basis স্থির, vertical basis ডানে হেলে যায়—এটি horizontal shear। Entries-এর অর্থ transformed basis দেখলেই জীবন্ত হয়।'],
+['নিজস্ব প্রশ্ন: এমন একটি <span class="formula">2×2</span> matrix বানাও যা (ক) '+V('i')+'-কে অপরিবর্তিত রাখে, (খ) '+V('j')+'-কে বামে ৩ একক সরিয়ে একই উচ্চতায় রাখে। তারপর <span class="formula">(2,−1)</span> কোথায় যায় বের করো।',4,'সৃষ্টি · মাঝারি','প্রথম column <span class="formula">(1,0)</span>, দ্বিতীয় column <span class="formula">(−3,1)</span>। তাই <span class="formula">A=</span>'+M([['1','−3'],['0','1']])+ ' এবং <span class="formula">A(2,−1)=(5,−1)</span>। এটি horizontal shear।'] ]}
+];
+let globalNo=0;
+function render(){
+ const host=document.getElementById('questions');
+ host.innerHTML=data.map(sec=>`<section class="section" id="${sec.id}"><div class="section-head"><h2>${sec.title}</h2><p>${sec.note}</p></div>${sec.qs.map(q=>{
+   const n=++globalNo; return `<article class="question" data-n="${n}"><div class="qtop"><div class="qnum">${toBn(n)}</div><div class="qbody"><p class="qtext">${q[0]} <span class="marks">[${toBn(q[1])}]</span></p><div class="tags">${q[2].split(' · ').map(t=>`<span class="tag">${t}</span>`).join('')}</div><div class="workbox"></div><div class="actions"><button class="solution-btn" aria-expanded="false" onclick="toggleSolution(${n},this)">উত্তর দেখুন</button><label class="done-label"><input type="checkbox" onchange="markDone(${n},this.checked)"> সমাধান করেছি</label></div><div class="solution" id="sol-${n}"><strong>সমাধান ${toBn(n)}।</strong> ${q[3]}</div></div></div></article>`
+ }).join('')}</section>`).join('');
+ restore();
+}
+function toBn(v){return String(v).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d])}
+function toggleSolution(n,btn){const el=document.getElementById('sol-'+n);const open=el.classList.toggle('open');btn.textContent=open?'উত্তর লুকান':'উত্তর দেখুন';btn.setAttribute('aria-expanded',open)}
+function toggleAll(show){document.querySelectorAll('.solution').forEach(el=>el.classList.toggle('open',show));document.querySelectorAll('.solution-btn').forEach(b=>{b.textContent=show?'উত্তর লুকান':'উত্তর দেখুন';b.setAttribute('aria-expanded',show)});toast(show?'সব সমাধান খোলা হয়েছে':'সব সমাধান লুকানো হয়েছে')}
+function markDone(n,checked){let done=JSON.parse(localStorage.getItem('la-done')||'[]');done=done.filter(x=>x!==n);if(checked)done.push(n);localStorage.setItem('la-done',JSON.stringify(done));updateProgress()}
+function restore(){const done=JSON.parse(localStorage.getItem('la-done')||'[]');done.forEach(n=>{const c=document.querySelector(`.question[data-n="${n}"] input`);if(c)c.checked=true});updateProgress()}
+function updateProgress(){const count=document.querySelectorAll('.done-label input:checked').length;document.getElementById('progressText').textContent=`সম্পন্ন ${toBn(count)}/৩০`;document.getElementById('progressFill').style.width=(count/30*100)+'%'}
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(()=>el.classList.remove('show'),1800)}
+render();
+</script>
+</body>
+</html>
